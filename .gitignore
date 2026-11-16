@@ -33,6 +33,9 @@ wheels/
 .vscode/
 .idea/
 
-# Large datasets or raw downloads if needed
-data/raw/*.zip
-data/raw/*.tar.gz
+# Large datasets or raw downloads
+data/raw/
+*.csv
+!data/processed/test_predictions.csv
+!reports/model_comparison_results.csv
+
