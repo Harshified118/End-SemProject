@@ -39,3 +39,9 @@ data/raw/
 !data/processed/test_predictions.csv
 !reports/model_comparison_results.csv
 
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+
