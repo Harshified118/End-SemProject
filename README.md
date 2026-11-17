@@ -23,41 +23,24 @@ DropOrCop is a machine learning project that estimates whether a limited-edition
 
 ---
 
-## Work Done by Harsh Kumar (ML & Data Pipeline Lead)
+## Work Completed by Phase
 
-All technical work assigned to Harsh Kumar for Phases 1, 2, and 3 is complete, tested, and saved in this repository.
+### Phases 1–3: ML & Data Pipeline (Harsh Kumar - Sl. No. 31)
+- **Data Cleaning (`src/data_prep.py`):** Scrubbed StockX raw transactions, formatted currencies, computed `days_since_release`, exported `data/processed/clean_stockx.csv` (94,355 rows, 0 nulls).
+- **Model Training (`src/train.py`):** Trained scikit-learn `RandomForestRegressor` pipeline (One-Hot Encoding + StandardScaler), exported `models/best_model.joblib`.
+- **Benchmarking & Handoff:** Algorithm benchmark (`reports/model_comparison_results.csv`), presentation notebooks (`notebooks/`), and holdout predictions (`data/processed/test_predictions.csv`).
 
-### 1. Data Cleaning and Preparation (Phase 1)
-- **Script:** `src/data_prep.py`
-- **Output:** `data/processed/clean_stockx.csv` (94,355 rows, 0 missing values)
-- **What was done:**
-  - Loaded the raw StockX 2019 dataset (99,956 original records).
-  - Cleaned currency formatting by removing `$` and commas, converting prices to numeric floats.
-  - Parsed order and release dates to calculate elapsed time: `days_since_release = order_date - release_date`.
-  - Filtered corrupted records (zero or negative sale prices and sales recorded before official release date).
+### Phase 4: Model Checking & Residual Diagnostics (Anamika Ghosh - Sl. No. 32)
+- **Evaluation Script (`src/evaluate.py`):** Independent validation across 18,871 holdout test records.
+- **Metric Verification:** Test $R^2$ of `0.6525`, MAE of `$88.69`, RMSE of `$143.71`, MAPE of `20.23%`, and COP/DROP directional accuracy of `99.02%`.
+- **Residual Diagnostics & Figures (`reports/figures/`):** Normality histogram, parity scatter plot ($y = x$), homoscedasticity residual plots, and brand error comparison.
+- **Reports & Presentation Guide:** Detailed technical report in `reports/evaluation_report.md` and viva cheat sheet in `docs/anamika_presentation_guide.md`.
 
-### 2. Model Training and Serialization (Phases 2 & 3)
-- **Script:** `src/train.py`
-- **Saved Model:** `models/best_model.joblib`
-- **What was done:**
-  - Built an automated scikit-learn pipeline using One-Hot Encoding for `brand` and StandardScaler for numeric features (`retail_price`, `shoe_size`, `days_since_release`).
-  - Trained a single primary `RandomForestRegressor` (100 trees, max depth 12) to predict resale price directly.
-  - Added downstream logic to calculate profit/loss: `Profit = Predicted Resale Price - Retail Price`.
-  - **Results:**
-    - Training time: **0.96 seconds** (meets PRD target of under 2 minutes).
-    - Inference latency: **0.07 milliseconds** per sample (meets PRD target of under 50 ms).
-    - Model test performance: R² score of `0.6525`, MAE of `$88.69`, and RMSE of `$143.71`.
-    - COP/DROP verdict directional accuracy: `80.30%`.
-
-### 3. Downstream Handoffs for Teammates
-- **For Anamika Ghosh (Evaluation Lead - Phase 4):**
-  - Generated `data/processed/test_predictions.csv` containing 18,871 holdout test rows with actual prices, predicted prices, retail MSRP, and profit/loss values.
-- **For Sinthoiba Kangjam (API Lead - Phase 5):**
-  - Created a working FastAPI service in `api/main.py` with `/predict`, `/health`, and `/brands` endpoints.
-  - Configured input schema: `brand`, `retail_price`, `shoe_size`, `days_since_release`.
-  - Configured response schema: `estimated_resale_price`, `retail_price`, `estimated_profit`, `verdict` (COP/DROP).
-- **For Himesh Vaskar (Frontend Lead - Phase 6):**
-  - Specified the exact inputs and outputs needed for the webpage prediction form and COP/DROP badge styling.
+### Phase 5: Backend REST API & Integration (Sinthoiba Kangjam - Sl. No. 34)
+- **FastAPI Service (`api/main.py`):** Model lifecycle management, sub-millisecond inference, Pydantic data validation, and CORS middleware for frontend.
+- **Endpoints:** `/` (welcome & meta), `/health` (liveness), `/brands` (catalog metadata), and `POST /predict` (resale valuation & COP/DROP verdict).
+- **Automated Tests (`tests/test_api.py`):** 7 unit tests passing with 100% success.
+- **Documentation & Presentation Guide:** `docs/API_DOCUMENTATION.md` and `docs/sinthoiba_presentation_guide.md`.
 
 ### 4. Extra Deliverables for Presentation & Viva
 - **Algorithm Benchmark:** Compared Random Forest against Gradient Boosting in `reports/model_comparison_results.csv`. Random Forest was chosen because it trains 6x faster while delivering matching accuracy.
