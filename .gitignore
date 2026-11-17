@@ -1,1 +1,45 @@
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Obsidian / IDE
+.obsidian/
+.vscode/
+.idea/
+
+# Large datasets or raw downloads
+data/raw/
+*.csv
+!data/processed/test_predictions.csv
+!reports/model_comparison_results.csv
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
